@@ -1,7 +1,7 @@
 package org.launchcode.controllers;
 
 import org.launchcode.models.Cheese;
-import org.launchcode.models.CheeseType;
+import org.launchcode.models.data.CategoryDao;
 import org.launchcode.models.data.CheeseDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,12 @@ import javax.validation.Valid;
 public class CheeseController {
 
     @Autowired
-    private CheeseDao cheeseDao;
+    private CheeseDao cheeseDao;                                            //cheeseDao object is the mechanism with which we interact with objects stored in the database
+
+
+    @Autowired                                                            //categoryDao object is the mechanism with which we interact with objects stored in the database
+    private CategoryDao categoryDao;             //directions do not say to do this??
+
 
     // Request path: /cheese
     @RequestMapping(value = "")
@@ -38,19 +43,23 @@ public class CheeseController {
     public String displayAddCheeseForm(Model model) {
         model.addAttribute("title", "Add Cheese");
         model.addAttribute(new Cheese());
-        model.addAttribute("cheeseTypes", CheeseType.values());
+        model.addAttribute("categories", categoryDao.findAll());     //directions do not say to add categoryDao field above??
         return "cheese/add";
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddCheeseForm(@ModelAttribute  @Valid Cheese newCheese,
-                                       Errors errors, Model model) {
+                                       Errors errors,                                                     //fetches categoryId from the view
+                                       @RequestParam int categoryId,
+                                       Model model) {
+
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Cheese");
             return "cheese/add";
         }
 
+        //Category cat = categoryDao.findOne(categoryId)                    //finds the Category object that corresponds to the given id
         cheeseDao.save(newCheese);
         return "redirect:";
     }

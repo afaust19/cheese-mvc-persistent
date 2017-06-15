@@ -1,10 +1,10 @@
 package org.launchcode.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by afaust on 6/15/17.
@@ -19,6 +19,10 @@ public class Category {
     @NotNull
     @Size(min=3, max=15)
     private String name;
+
+    @OneToMany                                          //one-to-many relationship = each one category will have many cheeses, but each cheese can only have one category
+    @JoinColumn(name = "category_id")                   //tells Hibernate to use the category_id column of the cheese table to determine which cheese belong to a given category (category_id is automatically created by Hibernate in the Cheese class (category field)
+    private List<Cheese> cheeses = new ArrayList<>();   //creates a new field named cheeses (empty ArrayList of Cheese objects) - Hibernate will population this list for us using above annotation specifications
 
     public Category() {}        //default constructor
 
