@@ -25,15 +25,14 @@ public class Cheese {
     @Size(min=1, message = "Description must not be empty")
     private String description;
 
-    //private CheeseType type;                        //replace this with category (below)
-
     @ManyToOne                                  //specifies that there can be many cheeses for any one category
     private Category category;                  //Hibernate will create a column named category_id (based on the field name) and when a Cheese is stored, this column will contain the id of its category object
 
 
-    public Cheese(String name, String description) {
+    public Cheese(String name, String description, Category category) {
         this.name = name;
         this.description = description;
+        this.category = category;
     }
 
     public Cheese() { }
@@ -58,11 +57,11 @@ public class Cheese {
         this.description = description;
     }
 
-    //public CheeseType getType() {
-    //    return type;
-    //}
+    public Category getCategory() {
+        return category;
+    }
 
-    //public void setType(CheeseType type) {
-    //    this.type = type;
-    //}
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

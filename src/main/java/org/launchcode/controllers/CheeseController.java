@@ -1,5 +1,6 @@
 package org.launchcode.controllers;
 
+import org.launchcode.models.Category;
 import org.launchcode.models.Cheese;
 import org.launchcode.models.data.CategoryDao;
 import org.launchcode.models.data.CheeseDao;
@@ -59,7 +60,8 @@ public class CheeseController {
             return "cheese/add";
         }
 
-        //Category cat = categoryDao.findOne(categoryId)                    //finds the Category object that corresponds to the given id
+        Category cat = categoryDao.findOne(categoryId);                    //finds the Category object that corresponds to the given id
+        newCheese.setCategory(cat);
         cheeseDao.save(newCheese);
         return "redirect:";
     }
