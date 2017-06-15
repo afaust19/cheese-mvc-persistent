@@ -4,15 +4,19 @@
 
 <head th:replace="fragments :: head"></head>
 
+<h1 th:text="${title}">Default Title</h1>
+
 <body class="container">
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<p unless="${categories} and ${categories.size()}">no categories :(</p>
+<!--<p unless="${categories} and ${categories.size()}">no categories :(</p>-->
 
 <ul th:each="category : ${categories}">
     <li th:text="${category.name}"></li>
 </ul>
+
+<a href="/category/add">Add Category</a>
 
 </body>
 </html>
