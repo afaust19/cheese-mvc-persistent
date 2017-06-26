@@ -11,17 +11,17 @@
 
 <br/>
 
-<form method="post" style="max-width:600px;" th:object="${category}">
+<form method="post" action="/menu/add" style="max-width:600px;" th:object="${menu}">
+
     <div class="form-group">
         <label th:for="name">Name</label>
         <input class="form-control" th:field="*{name}" />
         <span th:errors="*{name}" class="error"></span>
     </div>
 
-    <input type="submit" value="Add Category" />
+    <input type="submit" value="Create Menu" />
 
 </form>
 
 </body>
-
 </html>

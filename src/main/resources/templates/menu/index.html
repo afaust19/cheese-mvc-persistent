@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 
 <head th:replace="fragments :: head"></head>
@@ -12,13 +11,13 @@
 
 <br/>
 
-<!--<p unless="${categories} and ${categories.size()}">no categories :(</p>-->
-
-<ul th:each="category : ${categories}">
-    <li th:text="${category.name}"></li>
+<ul>
+    <li th:each="menu : ${menus}">
+        <a th:href="'/menu/view/' + ${menu.id}" th:text="${menu.name}"></a>
+    </li>
 </ul>
 
-<a href="/category/add">Add Category</a>
+<a href="/menu/add">Add Menu</a>
 
 </body>
 </html>

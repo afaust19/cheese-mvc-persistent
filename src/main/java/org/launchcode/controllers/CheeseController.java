@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created by LaunchCode
@@ -22,12 +23,11 @@ import javax.validation.Valid;
 @RequestMapping("cheese")
 public class CheeseController {
 
-    @Autowired
-    private CheeseDao cheeseDao;                                            //cheeseDao object is the mechanism with which we interact with objects stored in the database
+    @Autowired                                                              //tells IntelliJ to give us an instance of this class (makes a class that implements the CheeseDao interface, makes an instance of that class, and then populates the field for us, e.g dependency injection)
+    CheeseDao cheeseDao;                                                    //cheeseDao object is the mechanism with which we interact with objects stored in the database
 
-
-    @Autowired                                                            //categoryDao object is the mechanism with which we interact with objects stored in the database
-    private CategoryDao categoryDao;             //directions do not say to do this??
+    @Autowired                                                              //categoryDao object is the mechanism with which we interact with objects stored in the database
+    CategoryDao categoryDao;                                                //directions do not say to do this??
 
 
     // Request path: /cheese
@@ -81,6 +81,15 @@ public class CheeseController {
         }
 
         return "redirect:";
+    }
+
+    @RequestMapping(value = "category/{categoryId}", method = RequestMethod.GET)    //need to fix
+    public String category(Model model, @RequestParam int categoryId) {
+        Category cat = categoryDao.findOne(categoryId);
+        List<Cheese> cheeses = cat.getCheeses();
+        model.addAttribute("cheeses", cheeses);
+        model.addAttribute("title", "Cheeses in Category: " + cat.getName());
+        return "cheese/index";
     }
 
 }

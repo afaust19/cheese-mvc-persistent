@@ -38,6 +38,8 @@ public class Category {
         this.name = name;
     }
 
+    public List<Cheese> getCheeses() { return cheeses;}         //not part of the studio but shown in the video?
+
     public int getId() {
         return id;
     }
